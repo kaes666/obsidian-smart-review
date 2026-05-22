@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+  "id": "smart-review",
+  "name": "Smart Review",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Intelligent spaced review for your Obsidian vault. Surfaces forgotten notes based on staleness, link isolation, and priority tags.",
+  "author": "Cédric",
+  "authorUrl": "",
+  "isDesktopOnly": false
 }

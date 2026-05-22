@@ -1,8 +1,106 @@
-/*
+/* ── Smart Review Plugin Styles ─────────────────────────── */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+/* Header */
+.sr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.sr-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sr-refresh-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text-muted);
+  border-radius: 4px;
+}
+.sr-refresh-btn:hover { background: var(--background-modifier-hover); }
 
-If your plugin does not need CSS, delete this file.
+/* Liste */
+.sr-list { padding: 8px; }
+.sr-loading, .sr-empty {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
 
-*/
+/* Carte */
+.sr-card {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.sr-card-exit {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+/* Titre */
+.sr-note-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-normal);
+  text-decoration: none;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.sr-note-title:hover { color: var(--text-accent); }
+
+/* Méta */
+.sr-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* Barre de score */
+.sr-bar-wrap {
+  height: 3px;
+  background: var(--background-modifier-border);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.sr-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+.sr-bar-high { background: var(--color-red); }
+.sr-bar-mid  { background: var(--color-orange); }
+.sr-bar-low  { background: var(--color-green); }
+
+/* Actions */
+.sr-actions {
+  display: flex;
+  gap: 4px;
+}
+.sr-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: none;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+.sr-action-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}

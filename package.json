@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "smart-review",
+	"version": "0.1.0",
+	"description": "Intelligent spaced review for your Obsidian vault. Surfaces forgotten notes based on staleness, link isolation, and priority tags.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
