@@ -1,90 +1,120 @@
-# Obsidian Sample Plugin
+# Smart Review — Obsidian Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+> Intelligent spaced review for your Obsidian vault. Surface forgotten notes before they become dead knowledge.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+---
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+## The problem
 
-## First time developing plugins?
+You take notes. Lots of them. But most of them are never read again.
 
-Quick starting guide for new plugin devs:
+Smart Review fixes that by automatically surfacing notes that deserve your attention — based on how long they've been forgotten, how isolated they are in your vault, and which folders they live in.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+---
 
-## Releasing new releases
+## Features
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+- **Automatic scoring** — every note gets a priority score based on 4 criteria
+- **Daily review panel** — a sidebar with your top notes to revisit each day
+- **Quick actions** — mark notes as valid, to update, to archive, or skip
+- **Folder rules** — boost or penalize notes based on their folder (e.g. Archive = low priority)
+- **Priority tags** — tag notes with `#important` to push them to the top
+- **Fully configurable** — adjust every weight and rule to match your workflow
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+---
 
-## Adding your plugin to the community plugin list
+## How scoring works
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+Each note receives a score from 0 to 100 based on:
 
-## How to use
+| Criterion | Max points | Logic |
+|-----------|-----------|-------|
+| Staleness | 35 | Logarithmic curve — notes forgotten for months score higher |
+| Isolation | 35 | Exponential decay — notes with 0 backlinks score highest |
+| Tag boost | 15 | Bonus if the note has a priority tag you configured |
+| Folder score | 15 | Bonus or penalty based on folder rules you define |
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+Notes modified within your recency threshold (default: 7 days) are never shown.
 
-## Manually installing the plugin
+---
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+## Installation
 
-## Improve code quality with eslint
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
+### From the Obsidian community plugin store (recommended)
 
-## Funding URL
+1. Open Obsidian → **Settings** → **Community plugins**
+2. Disable safe mode if prompted
+3. Click **Browse** and search for **Smart Review**
+4. Click **Install**, then **Enable**
 
-You can include funding URLs where people who use your plugin can financially support it.
+### Manual installation
 
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/kaes666/obsidian-smart-review/releases/latest)
+2. Create a folder at `<your-vault>/.obsidian/plugins/smart-review/`
+3. Copy the 3 files into that folder
+4. Open Obsidian → **Settings** → **Community plugins** → enable **Smart Review**
 
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
+---
 
-If you have multiple URLs, you can also do:
+## Usage
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+1. Click the **brain icon** in the left sidebar to open the review panel
+2. Your top notes appear as cards with their score and metadata
+3. For each note, choose an action:
+   - **✓ Still valid** — note is up to date, snooze for 30 days
+   - **✎ Needs update** — flag it for editing
+   - **Archive** — snooze for 90 days
+   - **Skip** — come back to it tomorrow
 
-## API Documentation
+---
 
-See https://docs.obsidian.md
+## Configuration
+
+Go to **Settings** → **Community plugins** → **Smart Review** to configure:
+
+### General
+- **Notes per session** — how many notes to show per day (default: 5)
+- **Recency threshold** — notes modified within this many days are ignored (default: 7)
+- **Daily note injection** — automatically add a review block to your daily note
+
+### Exclusions
+- **Excluded folders** — folders to completely ignore (one per line)
+- **Priority tags** — tags that boost a note's score (e.g. `#important`)
+
+### Folder rules
+Add custom rules to boost or penalize notes based on their folder:
+
+| Folder | Score | Effect |
+|--------|-------|--------|
+| Archive | -20 | Almost never shown |
+| Projects | +5 | Shown occasionally |
+| Daily | +10 | Shown more often |
+
+### Criteria weights
+Adjust the weight of each scoring criterion. The four values should total 100.
+
+---
+
+## Compatibility
+
+- Obsidian 1.4.0+
+- Desktop and mobile
+- Works with any vault structure
+
+---
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first.
+
+---
+
+## Support
+
+If Smart Review saves you time, consider [buying me a coffee ☕](https://buymeacoffee.com/)
+
+---
+
+## License
+
+[MIT](LICENSE)
